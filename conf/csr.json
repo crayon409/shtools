@@ -1,0 +1,25 @@
+{
+    "CN": "127.0.0.1",
+    "hosts": [
+        "127.0.0.1",
+        "localhost",
+        "https://127.0.0.1"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "O": "Self",
+            "OU": "Sociaty",
+            "ST": "JiangSu",
+            "L": "NJ"
+        }
+    ],
+    "ca": {
+      "expiry": "876000h"
+    }
+}
+
