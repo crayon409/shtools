@@ -3,10 +3,10 @@ SERVER := "server"
 CLIENT := "client"
 GO := $(shell which go)
 
-cfssl:
+cfssl::install:
 	GOBIN=${PWD}/gobin GOPROXY=https://goproxy.cn \
 	${GO} install github.com/cloudflare/cfssl/cmd/...@latest
-.PHONY:cfssl
+.PHONY:cfssl::install
 
 
 install: clean
