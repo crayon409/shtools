@@ -1,6 +1,13 @@
 
 SERVER := "server"
 CLIENT := "client"
+GO := $(shell which go)
+
+cfssl:
+	GOBIN=${PWD}/gobin GOPROXY=https://goproxy.cn \
+	${GO} install github.com/cloudflare/cfssl/cmd/...@latest
+.PHONY:cfssl
+
 
 install: clean
 	cfssl genkey -initca ./conf/csr.json | cfssljson -bare ${SERVER}
@@ -8,8 +15,11 @@ install: clean
 	cfssl genkey -initca ./conf/csr.json | cfssljson -bare ${CLIENT}
 .PHONY: install
 
+
 clean:
 	@rm -rf *.csr *.pem
+.PHONY: clean
+
 
 echo:
 	@echo ${SERVER} ${CLIENT}
