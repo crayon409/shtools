@@ -1,25 +1,23 @@
-
 SERVER := "server"
 CLIENT := "client"
 GO := $(shell which go)
-
-cfsslinstall:
-	GOBIN=${PWD}/gobin GOPROXY=https://goproxy.cn \
-	${GO} install github.com/cloudflare/cfssl/cmd/...@latest
-.PHONY:cfsslinstall
+GOBIN :=${PWD}/gobin
 
 
-install: clean
-	cfssl genkey -initca ./conf/csr.json | cfssljson -bare ${SERVER}
-	# cfssl gencert -initca -ca=${SERVER}.pem -ca-key=${SERVER}-key.pem -config=./conf/config.json -profile=www ./conf/csr.json |cfssljson -bare ${SERVER}
-	cfssl genkey -initca ./conf/csr.json | cfssljson -bare ${CLIENT}
+install: clean cfsslinstall
+	${GOBIN}/cfssl genkey -initca ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${SERVER}
+	# ${GOBIN}/ gencert -initca -ca=${SERVER}.pem -ca-key=${SERVER}-key.pem -config=./conf/config.json -profile=www ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${SERVER}
+	${GOBIN}/ genkey -initca ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${CLIENT}
 .PHONY: install
 
+cfsslinstall:
+	GOBIN=${GOBIN} GOPROXY=https://goproxy.cn \
+	${GO} install github.com/cloudflare/cfssl/cmd/...@latest
+.PHONY: cfsslinstall
 
 clean:
-	@rm -rf *.csr *.pem
-.PHONY: clean
-
+	@rm -rf ./pems/*
+	@rm -rf ${GOBIN}
 
 echo:
 	@echo ${SERVER} ${CLIENT}
