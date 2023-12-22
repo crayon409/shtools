@@ -7,7 +7,7 @@ GOBIN :=${PWD}/gobin
 install: clean cfsslinstall
 	${GOBIN}/cfssl genkey -initca ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${SERVER}
 	# ${GOBIN}/ gencert -initca -ca=${SERVER}.pem -ca-key=${SERVER}-key.pem -config=./conf/config.json -profile=www ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${SERVER}
-	${GOBIN}/ genkey -initca ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${CLIENT}
+	${GOBIN}/cfssl genkey -initca ./conf/csr.json | ${GOBIN}/cfssljson -bare ./pems/${CLIENT}
 .PHONY: install
 
 cfsslinstall:
